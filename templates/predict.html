@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kisan SuperAI • Predictor</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+
+<body>
+  <div class="bg-glow"></div>
+
+  <nav class="nav">
+    <div class="brand">
+      <div class="logo">🌾</div>
+      <div>
+        <h2>Kisan <span>SuperAI</span></h2>
+        <p class="mini">Crop Timing • Weather Risk • AI Solutions</p>
+      </div>
+    </div>
+
+    <div class="nav-right">
+
+      <!-- ✅ Language future improvements -->
+      <div class="pill">
+        <span>🌍</span>
+        <div style="font-weight:800;">Language:</div>
+        <div style="opacity:0.75; font-weight:800;">Future Improvements 🚧</div>
+      </div>
+
+      <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
+      <a class="nav-btn" href="/features">⬅ Back</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+
+    <section id="predictSection" class="section">
+      <div class="section-title">
+        <h2>📌 Crop Prediction Console</h2>
+        <p class="muted">Enter location, crop and land size</p>
+      </div>
+
+      <div class="glass card">
+        <div class="form-grid">
+          <div>
+            <label>District / City</label>
+            <input id="location" placeholder="Example: Kolkata, IN" />
+          </div>
+
+          <div>
+            <label>Crop</label>
+            <select id="crop">
+              <option value="wheat">Wheat</option>
+              <option value="rice">Rice</option>
+              <option value="maize">Maize</option>
+              <option value="potato">Potato</option>
+              <option value="tomato">Tomato</option>
+              <option value="onion">Onion</option>
+              <option value="mustard">Mustard</option>
+              <option value="cotton">Cotton</option>
+              <option value="sugarcane">Sugarcane</option>
+              <option value="pulses">Pulses</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Land Size (Acres)</label>
+            <input id="acres" type="number" value="1" min="0.5" step="0.5"/>
+          </div>
+
+          <button class="btn-primary big" onclick="getPrediction()">
+            ✨ Predict Now
+          </button>
+        </div>
+
+        <div class="hint">
+          💡 Tip: Use format like Patna, IN or Delhi, IN
+        </div>
+      </div>
+
+      <div id="loader" class="loader hidden">
+        <div class="spinner"></div>
+        <p>Running AI prediction…</p>
+      </div>
+
+      <div id="dashboard" class="dash hidden">
+        <div class="dash-top">
+          <div class="dash-title">
+            <h3>📊 AI Dashboard</h3>
+            <p id="currentSummary" class="muted">—</p>
+          </div>
+          <button class="btn-ghost" onclick="downloadPDF()">📄 Download PDF</button>
+        </div>
+
+        <div class="dash-grid">
+
+          <div class="glass widget">
+            <div class="w-head">
+              <h4>🌱 Growth Probability</h4>
+              <span id="probBadge" class="badge">0%</span>
+            </div>
+
+            <div class="ring-wrap">
+              <svg class="ring" viewBox="0 0 120 120">
+                <circle class="ring-bg" cx="60" cy="60" r="48"></circle>
+                <circle id="ringProg" class="ring-prog" cx="60" cy="60" r="48"></circle>
+              </svg>
+              <div class="ring-text">
+                <div id="ringValue" class="ring-value">0%</div>
+                <div class="ring-sub">AI Score</div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+            <div class="line">
+              <span>📌 Best Time to Sow</span>
+              <span id="bestTime" class="strong">—</span>
+            </div>
+          </div>
+
+          <div class="glass widget">
+            <div class="w-head">
+              <h4>⚠️ Weather Risk</h4>
+              <span class="muted">Live Risk %</span>
+            </div>
+
+            <div class="riskbar">
+              <div class="risklabel"><span>🌧️ Rain</span><b id="rainRisk">0%</b></div>
+              <div class="track"><div id="rainFill" class="fill"></div></div>
+            </div>
+
+            <div class="riskbar">
+              <div class="risklabel"><span>💨 Wind</span><b id="windRisk">0%</b></div>
+              <div class="track"><div id="windFill" class="fill"></div></div>
+            </div>
+
+            <div class="riskbar">
+              <div class="risklabel"><span>🔥 Heat</span><b id="heatRisk">0%</b></div>
+              <div class="track"><div id="heatFill" class="fill"></div></div>
+            </div>
+
+            <div class="divider"></div>
+            <div id="riskStatus" class="status">✅ Weather looks okay.</div>
+          </div>
+
+          <div class="glass widget">
+            <div class="w-head">
+              <h4>🧾 Resources Needed</h4>
+              <span class="muted">Plan for your field</span>
+            </div>
+
+            <div class="resource-grid">
+              <div class="res">
+                <div class="ico">🌾</div>
+                <div>
+                  <div class="res-title">Seed</div>
+                  <div id="seedNeed" class="res-val">—</div>
+                </div>
+              </div>
+
+              <div class="res">
+                <div class="ico">⏳</div>
+                <div>
+                  <div class="res-title">Duration</div>
+                  <div id="duration" class="res-val">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+            <button class="btn-ghost full" onclick="togglePanel('moreResources')">
+              📦 View Fertilizer + Irrigation
+            </button>
+
+            <div id="moreResources" class="panel hidden">
+              <div class="two-col">
+                <div>
+                  <h5>🧪 Fertilizer Plan</h5>
+                  <ul id="fertPlan"><li>—</li></ul>
+                </div>
+                <div>
+                  <h5>💧 Irrigation Plan</h5>
+                  <ul id="irrPlan"><li>—</li></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass widget">
+            <div class="w-head">
+              <h4>✅ AI Solutions</h4>
+              <span class="muted">Actionable steps</span>
+            </div>
+
+            <div id="solutions" class="solutions">
+              <div class="sol">—</div>
+            </div>
+
+            <div class="divider"></div>
+            <button class="btn-primary full" onclick="openFloatingChat()">
+              🤖 Ask KisanAI
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Floating Chat -->
+  <div class="floating-chat collapsed" id="floatingChat">
+    <div class="chat-header" onclick="toggleChatBox()">
+      <div class="chat-title">
+        🤖 <span>KisanAI</span> <span class="online">● online</span>
+      </div>
+      <div class="chat-toggle" id="chatToggleIcon">▲</div>
+    </div>
+
+    <div class="chat-body">
+      <div class="chat-bubbles" id="chatBubbles">
+        <div class="bot-bubble">
+          👋 Hello! Ask me anything about crops, diseases, pests, fertilizer, rain, heat, wind — anything!
+        </div>
+      </div>
+
+      <div class="chips">
+        <button onclick="sendChipFromUI('chip_yellow')">🍃 Yellow Leaves</button>
+        <button onclick="sendChipFromUI('chip_best')">🌾 Best Crop</button>
+        <button onclick="sendChipFromUI('chip_rain')">🌧️ Rain Protection</button>
+        <button onclick="sendChipFromUI('chip_fert')">🧪 Fertilizer</button>
+      </div>
+
+      <div class="chat-input-box">
+        <button class="voice-btn" onclick="startVoice()">🎤</button>
+        <input id="floatQuestion" placeholder="Type your question..."/>
+        <button onclick="sendFloatingChat()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/static/script.js"></script>
+</body>
+</html>

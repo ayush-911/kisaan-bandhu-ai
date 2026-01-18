@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kisan SuperAI • Weather</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <nav class="nav">
+    <div class="brand">
+      <div class="logo">🌦</div>
+      <div>
+        <h2>Weather <span>Check</span></h2>
+        <p class="mini">Live weather preview & quick advisory</p>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
+      <a class="nav-btn" href="/features">⬅ Back</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section class="section">
+      <div class="glass card">
+        <h2>🌍 Weather Checker</h2>
+        <p class="muted">Enter district/city and see live summary.</p>
+
+        <div class="divider"></div>
+
+        <div class="grid-2">
+          <div>
+            <label>Location</label>
+            <input id="wLoc" placeholder="Example: Patna, IN"/>
+          </div>
+          <div>
+            <label>Crop (optional)</label>
+            <input id="wCrop" placeholder="Example: Wheat"/>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <button class="btn-primary full" onclick="getWeatherOnly()">🔎 Check Weather</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div id="wLoader" class="loader hidden">
+          <div class="spinner"></div>
+          <p>Fetching weather…</p>
+        </div>
+
+        <div id="wResult" class="panel hidden"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/static/script.js"></script>
+
+  <script>
+    async function getWeatherOnly(){
+      const loc = document.getElementById("wLoc").value.trim();
+      if(!loc){
+        showToast("Enter location like: Patna, IN");
+        return;
+      }
+
+      document.getElementById("wLoader").classList.remove("hidden");
+      document.getElementById("wResult").classList.add("hidden");
+
+      try{
+        const res = await fetch("/weather_only",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({location: loc})
+        });
+
+        const data = await res.json();
+        document.getElementById("wLoader").classList.add("hidden");
+
+        if(!data.ok){
+          showToast(data.error || "Failed");
+          return;
+        }
+
+        const box = document.getElementById("wResult");
+        box.classList.remove("hidden");
+        box.innerHTML = `
+          ✅ <b>Weather Summary</b><br>
+          🌡 Temp: ${data.temp} °C<br>
+          🌧 Rain: ${data.rain} mm<br>
+          💨 Wind: ${data.wind_kmh} km/h<br>
+        `;
+      }catch(e){
+        document.getElementById("wLoader").classList.add("hidden");
+        showToast("Server error.");
+      }
+    }
+  </script>
+</body>
+</html>

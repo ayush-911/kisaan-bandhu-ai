@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kisan SuperAI • Welcome</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+
+<body class="intro-active">
+
+  <!-- ✅ PREMIUM INTRO SPLASH -->
+  <div id="introSplash" class="intro">
+    <div class="intro-card">
+
+      <div class="intro-top">
+        <div class="intro-logo">🌾</div>
+        <div class="intro-title">
+          <h1 data-i18n="appName">Kisan SuperAI</h1>
+          <p data-i18n="tagline">AI Crop Timing • Weather Risk • Market Prices</p>
+        </div>
+      </div>
+
+      <div class="intro-loader">
+        <div class="loader-ring"></div>
+        <span id="introText" data-i18n="introPreparing">Preparing dashboard...</span>
+      </div>
+
+      <div class="intro-mini" data-i18n="introMini">
+        ⚡ Fast • Smooth • AI Powered
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ✅ Background -->
+  <div class="bg-glow"></div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="brand">
+      <div class="logo">🌾</div>
+      <div>
+        <h2 data-i18n="brandTitle">Kisan SuperAI</h2>
+        <p class="mini" data-i18n="tagline">AI Crop Timing • Weather Risk • Market Prices</p>
+      </div>
+    </div>
+
+    <div class="nav-right">
+     <!-- ✅ Language future improvements -->
+<div class="pill">
+  <span>🌍</span>
+  <div style="font-weight:800;">Language:</div>
+  <div style="opacity:0.75; font-weight:800;">Future Improvements 🚧</div>
+</div>
+
+      <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
+
+      <a class="nav-btn" href="/map" data-i18n="navRoute">🗺 Route</a>
+      <a class="nav-btn" href="/features" data-i18n="navStart">🚀 Start</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section class="hero hero-full">
+
+      <div class="hero-left glass">
+        <div class="tag" data-i18n="tagAI">✅ AI Powered Farmer Assistant</div>
+
+        <h1 data-i18n="heroTitle">
+          Smart Farming with Kisan SuperAI
+        </h1>
+
+        <p class="sub" data-i18n="heroDesc">
+          Crop growth prediction, live weather risk, fertilizer/irrigation plan, AI chatbot support,
+          and market price insights — all in one dashboard.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn-primary" href="/features" data-i18n="exploreBtn">🚀 Explore Features</a>
+          <a class="btn-ghost" href="/map" data-i18n="routeFinderBtn">🗺 Route Finder</a>
+          <a class="btn-ghost" href="#help" data-i18n="helplineBtn">📞 Helpline</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-top" data-i18n="statPredictionTop">⚡ Prediction</div>
+            <div class="stat-main" data-i18n="statPredictionMain">Instant AI result</div>
+          </div>
+          <div class="stat">
+            <div class="stat-top" data-i18n="statRiskTop">🌦 Risk</div>
+            <div class="stat-main" data-i18n="statRiskMain">Rain / Wind / Heat</div>
+          </div>
+          <div class="stat">
+            <div class="stat-top" data-i18n="statMarketTop">💰 Market</div>
+            <div class="stat-main" data-i18n="statMarketMain">Live mandi rates</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right glass">
+        <div class="preview-top">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="preview-title" data-i18n="previewTitle">What you get ✅</span>
+        </div>
+
+        <div class="preview-body">
+          <div class="mini-card good">
+            <p class="mini-head" data-i18n="cardCropTitle">📊 Crop Advisory</p>
+            <p class="mini-desc" data-i18n="cardCropDesc">Best sowing time, growth chance, seed amount, duration.</p>
+          </div>
+
+          <div class="mini-card warn">
+            <p class="mini-head" data-i18n="cardRiskTitle">⚠️ Weather Risk</p>
+            <p class="mini-desc" data-i18n="cardRiskDesc">Rain %, wind %, heat % + solutions.</p>
+          </div>
+
+          <div class="mini-card">
+            <p class="mini-head" data-i18n="cardChatTitle">🤖 KisanAI Chat</p>
+            <p class="mini-desc" data-i18n="cardChatDesc">Ask anything: disease, pests, fertilizer, safety.</p>
+          </div>
+
+          <div class="mini-card">
+            <p class="mini-head" data-i18n="cardMarketTitle">💰 Market Prices</p>
+            <p class="mini-desc" data-i18n="cardMarketDesc">Check mandi min/max/modal prices instantly.</p>
+          </div>
+
+          <div class="mini-card">
+            <p class="mini-head" data-i18n="cardRouteTitle">🗺 Route Finder</p>
+            <p class="mini-desc" data-i18n="cardRouteDesc">Find best route to mandi using live maps.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="help" class="section">
+      <div class="glass card">
+        <h2 class="section-h2" data-i18n="helpTitle">📞 Farmer Helpline Numbers (India)</h2>
+        <p class="muted" data-i18n="helpDesc">Emergency help or government agriculture support:</p>
+
+        <div class="grid-2">
+          <div class="help-card">
+            <h4 data-i18n="kisanCallTitle">📞 Kisan Call Center</h4>
+            <p><b>1800-180-1551</b> <span data-i18n="tollFree">(Toll Free)</span></p>
+          </div>
+
+          <div class="help-card">
+            <h4 data-i18n="emergencyTitle">🚑 Emergency</h4>
+            <p><b>112</b></p>
+          </div>
+
+          <div class="help-card">
+            <h4 data-i18n="fireTitle">🚒 Fire</h4>
+            <p><b>101</b></p>
+          </div>
+
+          <div class="help-card">
+            <h4 data-i18n="policeTitle">🚓 Police</h4>
+            <p><b>100</b></p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <p class="muted" data-i18n="helpNote">✅ For crop disease & pesticide guidance: use “KisanAI Chat” in next page.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="glass card">
+        <div class="section-title">
+          <h2 data-i18n="teamTitle">👥 Team & Contact</h2>
+          <p class="muted" data-i18n="teamDesc">Project contributors & support details</p>
+        </div>
+
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-avatar">👤</div>
+            <div>
+              <div style="font-weight:900;">Rishav Jaiswal</div>
+              <div class="muted" style="font-size:12px;" data-i18n="teamMember">Team Member</div>
+            </div>
+          </div>
+
+          <div class="team-card">
+            <div class="team-avatar">👤</div>
+            <div>
+              <div style="font-weight:900;">Aditya Gupta</div>
+              <div class="muted" style="font-size:12px;" data-i18n="teamMember">Team Member</div>
+            </div>
+          </div>
+
+          <div class="team-card">
+            <div class="team-avatar">👤</div>
+            <div>
+              <div style="font-weight:900;">Aryan Gupta</div>
+              <div class="muted" style="font-size:12px;" data-i18n="teamMember">Team Member</div>
+            </div>
+          </div>
+
+          <div class="team-card">
+            <div class="team-avatar">📞</div>
+            <div>
+              <div style="font-weight:900;" data-i18n="contactTitle">Contact</div>
+              <div class="muted" style="font-size:13px; margin-top:4px;">
+                <b data-i18n="phoneLabel">Phone:</b> 9038408118 <br/>
+                <b data-i18n="emailLabel">Email:</b> trivediayush727@gmail.com
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/script.js"></script>
+
+  <!-- ✅ PREMIUM SPLASH JS -->
+  <script>
+    window.addEventListener("load", () => {
+      const splash = document.getElementById("introSplash");
+      const text = document.getElementById("introText");
+
+      const lines = [
+        "Preparing dashboard...",
+        "Loading AI prediction model...",
+        "Connecting Weather Engine...",
+        "Starting Market Price System...",
+        "Loading Route Finder Map..."
+      ];
+
+      let idx = 0;
+
+      const txtTimer = setInterval(() => {
+        idx = (idx + 1) % lines.length;
+        if(text) text.innerText = lines[idx];
+      }, 450);
+
+      setTimeout(() => {
+        clearInterval(txtTimer);
+        splash.classList.add("intro-hide");
+        document.body.classList.remove("intro-active");
+        document.body.classList.add("intro-done");
+      }, 1800);
+
+      setTimeout(() => {
+        if(document.body.classList.contains("intro-active")){
+          splash.classList.add("intro-hide");
+          document.body.classList.remove("intro-active");
+          document.body.classList.add("intro-done");
+        }
+      }, 3500);
+    });
+  </script>
+
+</body>
+</html>

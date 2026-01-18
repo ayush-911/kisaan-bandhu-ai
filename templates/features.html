@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kisan SuperAI • Features</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <nav class="nav">
+    <div class="brand">
+      <div class="logo">🌾</div>
+      <div>
+        <h2>Kisan <span>SuperAI</span></h2>
+        <p class="mini">Choose what you want to do</p>
+      </div>
+    </div>
+
+    <div class="nav-right">
+
+      <!-- ✅ Language future improvements -->
+      <div class="pill">
+        <span>🌍</span>
+        <div style="font-weight:800;">Language:</div>
+        <div style="opacity:0.75; font-weight:800;">Future Improvements 🚧</div>
+      </div>
+
+      <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
+      <a class="nav-btn" href="/">🏠 Home</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+
+    <section class="section">
+      <div class="section-title">
+        <h2>✨ Features Dashboard</h2>
+        <p class="muted">Select a feature and continue</p>
+      </div>
+
+      <div class="feature-grid">
+
+        <a class="feature-card glass" href="/predictor">
+          <div class="feat-icon">📊</div>
+          <div>
+            <h3>Crop Growth + Risk Prediction</h3>
+            <p class="muted">Best sowing time + risk % + solutions</p>
+          </div>
+        </a>
+
+        <a class="feature-card glass" href="/weather">
+          <div class="feat-icon">🌦</div>
+          <div>
+            <h3>Weather Checker</h3>
+            <p class="muted">Live temperature/rain/wind</p>
+          </div>
+        </a>
+
+        <a class="feature-card glass" href="/disease">
+          <div class="feat-icon">🦠</div>
+          <div>
+            <h3>Disease Help</h3>
+            <p class="muted">Symptom based solution</p>
+          </div>
+        </a>
+
+        <a class="feature-card glass" href="/chatbot">
+          <div class="feat-icon">🤖</div>
+          <div>
+            <h3>KisanAI Chat Assistant</h3>
+            <p class="muted">Ask disease, pests, fertilizer, safety</p>
+          </div>
+        </a>
+
+        <a class="feature-card glass" href="/market">
+          <div class="feat-icon">💰</div>
+          <div>
+            <h3>Market Prices (LIVE)</h3>
+            <p class="muted">Get mandi rates (min/max/modal)</p>
+          </div>
+        </a>
+
+        <a class="feature-card glass" href="/predictor">
+          <div class="feat-icon">📄</div>
+          <div>
+            <h3>Generate PDF Report</h3>
+            <p class="muted">Download PDF after prediction</p>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="glass card">
+        <div class="section-title">
+          <h2>👨‍💻 Team & Project Details</h2>
+          <p class="muted">Creator and project information</p>
+        </div>
+
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-avatar">👨‍🎓</div>
+            <div>
+              <h3>Ayush Kr. Trivedi</h3>
+              <p class="muted">Founder & Developer</p>
+              <p class="mini">Flask • AI/ML • Gemini • Weather API • UI/UX</p>
+            </div>
+          </div>
+
+          <div class="team-card">
+            <div class="team-avatar">🤖</div>
+            <div>
+              <h3>KisanAI Assistant</h3>
+              <p class="muted">AI Agriculture Support</p>
+              <p class="mini">Farming tips • disease guidance • safety help</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="panel">
+          ✅ Project Goal: Help farmers with best sowing time, weather risk prediction, resources needed, live mandi prices, and AI solutions.
+
+          📌 Main Features: Crop prediction • Weather risk • PDF report • Market prices • AI Chat assistant
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

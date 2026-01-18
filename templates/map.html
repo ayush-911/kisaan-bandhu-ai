@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KisanAI • Route Finder</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+  <style>
+    :root{
+      --bg1:#070a10;
+      --bg2:#0b1020;
+      --card: rgba(255,255,255,0.08);
+      --stroke: rgba(255,255,255,0.12);
+      --txt:#eaf4ff;
+      --muted: rgba(255,255,255,0.65);
+      --green:#19e27f;
+      --red:#ff6b6b;
+      --amber:#ffd166;
+      --shadow: 0 18px 70px rgba(0,0,0,0.45);
+      --radius: 22px;
+    }
+
+    *{ margin:0; padding:0; box-sizing:border-box; font-family:"Poppins",sans-serif; }
+    body{
+      min-height:100vh;
+      background: radial-gradient(1200px 700px at 10% 10%, rgba(25,226,127,0.18), transparent 60%),
+                  radial-gradient(1000px 700px at 90% 20%, rgba(92,156,255,0.16), transparent 55%),
+                  linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--txt);
+      overflow-x:hidden;
+    }
+
+    .wrap{ max-width:980px; margin:0 auto; padding:34px 16px 60px; }
+
+    .glass{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .title{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+
+    .title h1{ font-size:20px; font-weight:800; }
+    .title p{ font-size:12px; color:var(--muted); margin-top:4px; }
+
+    .card{ padding:16px; }
+
+    label{ font-size:12px; color:var(--muted); display:block; margin:10px 0 6px; }
+    input{
+      width:100%;
+      padding:14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(10,14,22,0.6);
+      color: var(--txt);
+      outline:none;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width:720px){
+      .grid2{ grid-template-columns: 1fr; }
+    }
+
+    .btn{
+      margin-top:12px;
+      width:100%;
+      padding:14px 16px;
+      border-radius:16px;
+      border:none;
+      cursor:pointer;
+      font-weight:800;
+      background: linear-gradient(135deg, #19e27f, #8cffc6);
+      color:#062012;
+    }
+
+    .linkBtn{
+      margin-top:10px;
+      width:100%;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.18);
+      cursor:pointer;
+      font-weight:700;
+      background: rgba(255,255,255,0.06);
+      color: var(--txt);
+    }
+
+    #map{
+      margin-top:14px;
+      width:100%;
+      height: 380px;
+      border-radius: 18px;
+      overflow:hidden;
+    }
+
+    .err{
+      margin-top:12px;
+      color:#ff8a8a;
+      font-size:13px;
+      white-space: pre-wrap;
+    }
+
+    .panel{
+      margin-top:14px;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .kpi{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 0;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+    .kpi:last-child{ border-bottom:none; }
+    .kpi b{ font-size:14px; }
+    .kpi span{ color:var(--muted); font-size:12px; }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+    @media (max-width:720px){
+      .cards{ grid-template-columns: 1fr; }
+    }
+    .vcard{
+      padding:12px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+    }
+    .vtop{
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom:6px;
+    }
+    .vtop .name{ font-weight:800; }
+    .vtop .tag{ font-size:12px; color:var(--muted); }
+    .vtime{ font-size:18px; font-weight:900; }
+    .vsmall{ font-size:12px; color:var(--muted); margin-top:4px; }
+
+    .safetyWrap{
+      margin-top:12px;
+      padding:12px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .bar{
+      height:12px;
+      border-radius:100px;
+      background: rgba(255,255,255,0.12);
+      overflow:hidden;
+      margin-top:8px;
+    }
+    .fill{
+      height:100%;
+      width:0%;
+      border-radius:100px;
+      background: linear-gradient(135deg, #19e27f, #8cffc6);
+      transition: width 0.35s ease;
+    }
+
+    .reasons{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.55;
+    }
+    .reasons li{ margin-left:16px; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="title">
+      <div>
+        <h1>🗺 Route Finder (In-App)</h1>
+        <p>Distance + Time + Vehicle ETA + Safety % (YOUR SAFETY IS OUR PRIORITY)</p>
+      </div>
+      <a href="/features" style="text-decoration:none;">
+        <button class="linkBtn">⬅ Back</button>
+      </a>
+    </div>
+
+    <div class="glass card">
+      <div class="grid2">
+        <div>
+          <label>Start Location</label>
+          <input id="start" placeholder="Example: Patna, Bihar" />
+        </div>
+
+        <div>
+          <label>End Location</label>
+          <input id="end" placeholder="Example: Muzaffarpur Mandi" />
+        </div>
+      </div>
+
+      <button class="btn" onclick="getRoutePro()">🚀 Find Best Route</button>
+
+      <div id="map"></div>
+
+      <div id="routePanel" class="panel" style="display:none;">
+        <div class="kpi">
+          <b>📍 Distance</b>
+          <span id="distText">—</span>
+        </div>
+        <div class="kpi">
+          <b>⏱ Estimated Time (Car)</b>
+          <span id="timeText">—</span>
+        </div>
+
+        <div class="cards">
+          <div class="vcard">
+            <div class="vtop"><div class="name">🏍 Bike</div><div class="tag">fast city</div></div>
+            <div id="bikeTime" class="vtime">—</div>
+            <div class="vsmall">Best for small roads</div>
+          </div>
+          <div class="vcard">
+            <div class="vtop"><div class="name">🚗 Car</div><div class="tag">normal</div></div>
+            <div id="carTime" class="vtime">—</div>
+            <div class="vsmall">Balanced option</div>
+          </div>
+          <div class="vcard">
+            <div class="vtop"><div class="name">🚚 Truck</div><div class="tag">heavy load</div></div>
+            <div id="truckTime" class="vtime">—</div>
+            <div class="vsmall">Slow but safe load</div>
+          </div>
+        </div>
+
+        <div class="safetyWrap">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+            <b>🛡 Route Safety</b>
+            <span id="safetyPct" style="font-weight:900;">—</span>
+          </div>
+          <div class="bar"><div id="safetyFill" class="fill"></div></div>
+          <ul id="safetyReasons" class="reasons"></ul>
+        </div>
+      </div>
+
+      <div id="err" class="err"></div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    // ✅ Leaflet map init
+    const map = L.map("map").setView([22.57, 88.36], 5); // India view
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 18,
+      attribution: "© OpenStreetMap"
+    }).addTo(map);
+
+    let routeLine = null;
+    let startMarker = null;
+    let endMarker = null;
+
+    function formatMinutes(mins){
+      mins = Math.max(1, Math.round(mins));
+      if(mins < 60) return `${mins} min`;
+      const h = Math.floor(mins/60);
+      const m = mins % 60;
+      return `${h}h ${m}m`;
+    }
+
+    async function getRoutePro(){
+      const start = document.getElementById("start").value.trim();
+      const end = document.getElementById("end").value.trim();
+      const err = document.getElementById("err");
+      const panel = document.getElementById("routePanel");
+
+      err.innerText = "";
+      panel.style.display = "none";
+
+      if(!start || !end){
+        err.innerText = "❌ Please enter both Start and End location.";
+        return;
+      }
+
+      try{
+        const res = await fetch("/route_pro", {
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({ start, end })
+        });
+
+        const data = await res.json();
+
+        if(!data.ok){
+          err.innerText = "❌ " + (data.error || "Route error");
+          return;
+        }
+
+        // ✅ map draw
+        const coords = data.route_coords || [];
+        if(coords.length > 1){
+          if(routeLine) map.removeLayer(routeLine);
+          if(startMarker) map.removeLayer(startMarker);
+          if(endMarker) map.removeLayer(endMarker);
+
+          routeLine = L.polyline(coords, { weight: 5 }).addTo(map);
+
+          const s = coords[0];
+          const e = coords[coords.length - 1];
+
+          startMarker = L.marker(s).addTo(map).bindPopup("Start");
+          endMarker = L.marker(e).addTo(map).bindPopup("End");
+
+          map.fitBounds(routeLine.getBounds(), { padding:[20,20] });
+        }
+
+        // ✅ KPI
+        panel.style.display = "block";
+        document.getElementById("distText").innerText = data.distance_text || "—";
+        document.getElementById("timeText").innerText = data.duration_text || "—";
+
+        // ✅ vehicle times (mins)
+        const carMin = Number(data.duration_min || 0);
+        const bikeMin = Math.round(carMin * 0.92);
+        const truckMin = Math.round(carMin * 1.25);
+
+        document.getElementById("bikeTime").innerText = formatMinutes(bikeMin);
+        document.getElementById("carTime").innerText = formatMinutes(carMin);
+        document.getElementById("truckTime").innerText = formatMinutes(truckMin);
+
+        // ✅ safety
+        document.getElementById("safetyPct").innerText = `${data.safety_percent || 0}%`;
+        document.getElementById("safetyFill").style.width = `${data.safety_percent || 0}%`;
+
+        const reasons = document.getElementById("safetyReasons");
+        reasons.innerHTML = "";
+        (data.safety_reasons || []).forEach(r=>{
+          const li = document.createElement("li");
+          li.innerText = r;
+          reasons.appendChild(li);
+        });
+
+      }catch(e){
+        err.innerText = "❌ Network error.\n" + e;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kisan SuperAI • KisanAI Chat</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+
+<body>
+  <div class="bg-glow"></div>
+
+  <nav class="nav">
+    <div class="brand">
+      <div class="logo">🤖</div>
+      <div>
+        <h2>KisanAI <span style="color: var(--green);">Chat</span></h2>
+        <p class="mini">Ask about crop disease, pests, fertilizer, safety</p>
+      </div>
+    </div>
+
+    <div class="nav-right">
+
+      <!-- ✅ Language Selector (Premium + Works with script.js) -->
+
+      <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
+
+      <!-- ✅ Reset Chat Button -->
+      <button class="nav-btn" onclick="resetChat()">🔄 Reset</button>
+
+      <a class="nav-btn" href="/features">⬅ Back</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section class="section">
+      <div class="glass card">
+
+        <h2 style="font-size:26px;">💬 Ask KisanAI</h2>
+        <p class="muted">
+          I will first ask your <b>City/Gaav</b> and <b>Crop</b>, then give best solution like an expert.
+        </p>
+
+        <div class="divider"></div>
+
+        <!-- ✅ Chat bubbles -->
+        <div id="chatBubbles" class="chat-bubbles" style="height:360px;">
+          <div class="bot-bubble">
+            👋 Hello farmer! 😊 <br/>
+            ✅ Before I guide you, tell me your <b>City / Village (Gaav)</b> 🌍
+          </div>
+        </div>
+
+        <!-- ✅ Chips (disabled feeling until user gives input, still works) -->
+        <div class="chips">
+          <button onclick="sendChipFromUI('chip_yellow')">🍃 Yellow Leaves</button>
+          <button onclick="sendChipFromUI('chip_best')">🌾 Best Winter Crop</button>
+          <button onclick="sendChipFromUI('chip_rain')">🌧️ Rain Protection</button>
+          <button onclick="sendChipFromUI('chip_fert')">🧪 Fertilizer</button>
+        </div>
+
+        <!-- ✅ Chat Input -->
+        <div class="chat-input-box">
+          <button class="voice-btn" onclick="startVoice()">🎤</button>
+          <input id="floatQuestion" placeholder="Type your City / Gaav first..." />
+          <button onclick="sendFloatingChat()">Send</button>
+        </div>
+
+        <div style="margin-top:10px;" class="muted">
+          💡 Tip: Example → <b>Patna</b> / <b>Kolkata</b> / <b>My village near Lucknow</b>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- ✅ Script -->
+  <script src="/static/script.js"></script>
+</body>
+</html>

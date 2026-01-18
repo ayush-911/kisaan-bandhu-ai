@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kisan SuperAI • Disease Help</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <nav class="nav">
+    <div class="brand">
+      <div class="logo">🦠</div>
+      <div>
+        <h2>Disease <span>Support</span></h2>
+        <p class="mini">Symptoms → Cause → Solution</p>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
+      <a class="nav-btn" href="/features">⬅ Back</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section class="section">
+      <div class="glass card">
+        <h2>🧪 Crop Disease Quick Help</h2>
+        <p class="muted">Select a symptom and get instant guidance.</p>
+
+        <div class="divider"></div>
+
+        <div class="grid-2">
+          <div>
+            <label>Choose Symptom</label>
+            <select id="symptom">
+              <option value="yellow">🍃 Yellow Leaves</option>
+              <option value="spots">🟤 Brown/Black Spots</option>
+              <option value="wilting">🥀 Wilting / Drooping</option>
+              <option value="pests">🐛 Pest Attack</option>
+              <option value="fungus">🦠 Fungal Infection</option>
+
+              <!-- ✅ NEW problems -->
+              <option value="curling">🍂 Leaf Curling</option>
+              <option value="stunted">📉 Slow Growth / Stunted</option>
+              <option value="holes">🕳️ Holes in Leaves</option>
+              <option value="powder">⚪ White Powder (Mildew)</option>
+              <option value="rot">🧅 Root/Stem Rot</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Crop Name</label>
+            <input id="dCrop" placeholder="Example: Wheat / Tomato / Rice"/>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <button class="btn-primary full" onclick="getDiseaseHelp()">✅ Get Solution</button>
+        </div>
+
+        <div class="divider"></div>
+        <div id="dResult" class="panel hidden"></div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/static/script.js"></script>
+
+  <script>
+    function getDiseaseHelp(){
+      const s = document.getElementById("symptom").value;
+      const crop = document.getElementById("dCrop").value.trim() || "your crop";
+      const box = document.getElementById("dResult");
+
+      let msg = "";
+
+      if(s === "yellow"){
+        msg = `✅ Yellow Leaves (${crop}):<br>
+        • Check water first: waterlogging? drain field fast ✅<br>
+        • If soil is dry → give light irrigation<br>
+        • Nitrogen low → Urea spray 2% (20g/L) ✅<br>
+        • Or apply Urea 20–25kg/acre (small dose)<br>
+        • Patchy yellow → Zinc Sulphate 5g/L + Lime 2.5g/L<br>
+        • Use NPK 19:19:19 spray 5g/L for quick recovery<br>
+        • If white insects present → Neem oil 5ml/L<br>
+        • If leaf spots appear → Mancozeb 2g/L after rain stops<br>
+        • Remove weeds (steals nutrition)<br>
+        • Avoid over-fertilizer (burn risk)<br>
+        • Repeat spray after 5–7 days if required ✅<br>
+        • Best: Soil test for exact correction<br>`;
+      }
+
+      else if(s === "spots"){
+        msg = `✅ Brown/Black Spots (${crop}):<br>
+        • Remove infected leaves immediately ✅<br>
+        • Avoid overhead watering (don’t wet leaves)<br>
+        • Maintain spacing for airflow<br>
+        • Spray Mancozeb 2g/L OR Copper Oxychloride 2g/L<br>
+        • Repeat spray after 5–7 days if spreading<br>
+        • Do not apply heavy urea during disease time<br>
+        • Add potash dose (supports immunity)<br>
+        • Use clean tools (avoid spreading)<br>
+        • Stop irrigation for 1 day if humidity high<br>
+        • Burn or bury infected leaves (don’t keep in field)<br>
+        • If severe: ask local expert for crop-specific fungicide ✅<br>
+        • Observe daily after rain for new spots<br>`;
+      }
+
+      else if(s === "wilting"){
+        msg = `✅ Wilting / Drooping (${crop}):<br>
+        • Check soil moisture: too wet or too dry? ✅<br>
+        • If waterlogging → drain immediately (root suffocation)<br>
+        • If dry → provide light irrigation<br>
+        • Check roots for rot smell (root rot sign)<br>
+        • Apply Trichoderma in soil (best root protection)<br>
+        • Avoid high urea during wilting period<br>
+        • Use compost/FYM to improve soil health<br>
+        • Improve drainage and make channels<br>
+        • For fungal wilt: use recommended fungicide (local shop)<br>
+        • Remove severely infected plants to stop spread<br>
+        • Spray humic acid 2ml/L (stress recovery)<br>
+        • Tell crop + city for exact wilting diagnosis ✅<br>`;
+      }
+
+      else if(s === "pests"){
+        msg = `✅ Pest Attack (${crop}):<br>
+        • Check leaf underside for insects/eggs ✅<br>
+        • Spray Neem oil 5ml/L + few drops mild soap<br>
+        • Use yellow sticky traps for sucking pests<br>
+        • Use light irrigation (stressed plants attract pests)<br>
+        • Remove heavily damaged leaves<br>
+        • Clean weeds near field boundary (pest shelter)<br>
+        • Avoid excess nitrogen (pests multiply faster)<br>
+        • Use pheromone traps if available (for borers)<br>
+        • If caterpillars: handpick early morning<br>
+        • Spray as per local agriculture shop only if severe<br>
+        • Repeat neem spray every 5–7 days ✅<br>
+        • Monitor daily for 3 days after spray<br>`;
+      }
+
+      else if(s === "fungus"){
+        msg = `✅ Fungal Infection (${crop}):<br>
+        • Stop watering leaves directly ✅<br>
+        • Ensure spacing + sunlight for airflow<br>
+        • Spray Mancozeb 2g/L OR Copper Oxychloride 2g/L<br>
+        • Repeat after 5–7 days if required<br>
+        • Add potash (supports plant recovery)<br>
+        • Remove infected plant parts quickly<br>
+        • Avoid urea before rainfall days<br>
+        • Keep field clean & weed-free<br>
+        • Use Trichoderma in soil for prevention<br>
+        • Spray only after rain stops ✅<br>
+        • Don’t mix unknown chemicals together<br>
+        • Ask local shop for crop-specific fungicide if severe<br>`;
+      }
+
+      // ✅ NEW SYMPTOMS
+      else if(s === "curling"){
+        msg = `✅ Leaf Curling (${crop}):<br>
+        • Usually caused by sucking pests (aphids/whitefly) ✅<br>
+        • Check underside of leaves carefully<br>
+        • Spray Neem oil 5ml/L + mild soap drops<br>
+        • Install yellow sticky traps<br>
+        • Avoid excess urea (increases soft growth)<br>
+        • Remove badly curled leaves<br>
+        • Use balanced fertilizer (NPK) instead of only urea<br>
+        • Maintain field hygiene & remove weeds<br>
+        • Water regularly (stress increases curling)<br>
+        • If virus suspected: remove infected plant quickly ✅<br>
+        • Don’t reuse infected plant waste in compost<br>
+        • Monitor for 7 days and repeat neem if needed<br>`;
+      }
+
+      else if(s === "stunted"){
+        msg = `✅ Slow Growth / Stunted (${crop}):<br>
+        • Check soil moisture (too dry slows growth) ✅<br>
+        • Check for hard soil compaction (aerate soil)<br>
+        • Give balanced fertilizer NPK 19:19:19 spray 5g/L<br>
+        • Add compost/FYM to improve root development<br>
+        • Zinc deficiency can stunt → ZnSO4 spray 5g/L<br>
+        • Check pest attack in root zone<br>
+        • Remove weeds that steal nutrients<br>
+        • Maintain irrigation schedule (not too much)<br>
+        • Avoid urea overdose (burn roots)<br>
+        • Soil test recommended for perfect correction ✅<br>
+        • If cold weather: growth slow is normal, be patient<br>
+        • Use mulch to maintain temperature & moisture<br>`;
+      }
+
+      else if(s === "holes"){
+        msg = `✅ Holes in Leaves (${crop}):<br>
+        • This is usually caterpillars/leaf-eating insects ✅<br>
+        • Check early morning for worms<br>
+        • Handpick visible caterpillars if possible<br>
+        • Neem oil 5ml/L can reduce pest feeding<br>
+        • Install light trap/yellow trap if available<br>
+        • Keep weeds cleaned (pest shelter)<br>
+        • Avoid heavy nitrogen fertilizer (pests increase)<br>
+        • Apply safe pesticide only if severe (local shop advice)<br>
+        • Repeat neem spray after 5–7 days ✅<br>
+        • Rotate crops to prevent repeat attack<br>
+        • Maintain field border cleanliness<br>
+        • Inspect daily for new eggs/larvae<br>`;
+      }
+
+      else if(s === "powder"){
+        msg = `✅ White Powder (Mildew) (${crop}):<br>
+        • Usually powdery mildew due to humidity ✅<br>
+        • Increase spacing for airflow<br>
+        • Avoid water on leaves directly<br>
+        • Spray Sulphur based fungicide (local shop)<br>
+        • OR use Mancozeb 2g/L if suitable<br>
+        • Remove infected leaves early<br>
+        • Water in morning only (not evening)<br>
+        • Keep field clean & weed free<br>
+        • Repeat spray after 5–7 days ✅<br>
+        • Don’t overuse urea during infection time<br>
+        • Use potash for plant strength<br>
+        • If very severe: consult crop expert quickly ✅<br>`;
+      }
+
+      else {
+        msg = `✅ Root/Stem Rot (${crop}):<br>
+        • Caused by waterlogging + fungus ✅<br>
+        • Drain field immediately (most important)<br>
+        • Stop heavy irrigation for some days<br>
+        • Apply Trichoderma in soil (best protection)<br>
+        • Remove rotten plants to stop spread<br>
+        • Use raised beds in future for prevention<br>
+        • Add sand/organic matter to improve drainage<br>
+        • Avoid urea overdose (makes it worse)<br>
+        • If required: fungicide drench (local shop advice)<br>
+        • Spray Humic acid 2ml/L for stress recovery ✅<br>
+        • Keep soil aerated and weed-free<br>
+        • Monitor roots daily for 3–5 days<br>`;
+      }
+
+      box.innerHTML = msg;
+      box.classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
